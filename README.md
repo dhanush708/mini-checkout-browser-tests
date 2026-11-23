@@ -31,6 +31,7 @@ npm test
 | `npm run screenshots` | Regenerates the screenshots in [docs/evidence/](docs/evidence/) |
 
 ### What you should see
+This output was captured with the line reporter (`--reporter=line`) and saved in docs/evidence/test-run-chromium.txt. A plain `npm test` prints a shorter summary ending in `10 passed` and writes an HTML report, which `npm run report` opens.
 
 ```
 Running 10 tests using 8 workers

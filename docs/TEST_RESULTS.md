@@ -16,18 +16,18 @@
 - Time: 2.6s
 - Evidence: [docs/evidence/test-run-chromium.txt](evidence/test-run-chromium.txt)
 
-| Test ID | Test name | Browser | Result | Time |
-| :--- | :--- | :--- | :--- | :--- |
-| TC-01 | places an order and shows a single confirmation reference | Chromium | PASS | 1.8s |
-| TC-02 | blocks checkout when the name is blank and keeps the cart | Chromium | PASS | 0.8s |
-| TC-03 | updates line and order totals exactly when a quantity changes | Chromium | PASS | 1.1s |
-| TC-04 | blocks checkout on empty cart with exact message and preserves typed name | Chromium | PASS | 0.7s |
-| TC-05 | double-click on Place Order gives exactly one confirmation and reference stays the same | Chromium | PASS | 0.9s |
-| TC-06 | two clicks in the same tick still give one confirmation | Chromium | PASS | 0.8s |
-| TC-07 | reverts invalid quantity inputs (0, abc, 21) to last valid value | Chromium | PASS | 1.0s |
-| TC-08 | blocks Enter-key submission when name is blank | Chromium | PASS | 0.7s |
-| TC-09 | prevents horizontal viewport overflow at 375px mobile breakpoint (regression DEF-01) | Chromium | PASS | 0.6s |
-| TC-10 | ensures cart has no horizontal overflow and Remove button is fully visible at 1280px and 375px (regression DEF-02) | Chromium | PASS | 0.9s |
+| Test ID | Test name | Browser | Result |
+| :--- | :--- | :--- | :--- |
+| TC-01 | places an order and shows a single confirmation reference | Chromium | PASS |
+| TC-02 | blocks checkout when the name is blank and keeps the cart | Chromium | PASS |
+| TC-03 | updates line and order totals exactly when a quantity changes | Chromium | PASS |
+| TC-04 | blocks checkout on empty cart with exact message and preserves typed name | Chromium | PASS |
+| TC-05 | double-click on Place Order gives exactly one confirmation and reference stays the same | Chromium | PASS |
+| TC-06 | two clicks in the same tick still give one confirmation | Chromium | PASS |
+| TC-07 | reverts invalid quantity inputs (0, abc, 21) to last valid value | Chromium | PASS |
+| TC-08 | blocks Enter-key submission when name is blank | Chromium | PASS |
+| TC-09 | prevents horizontal viewport overflow at 375px mobile breakpoint (regression DEF-01) | Chromium | PASS |
+| TC-10 | ensures cart has no horizontal overflow and Remove button is fully visible at 1280px and 375px (regression DEF-02) | Chromium | PASS |
 
 ---
 

@@ -5,7 +5,7 @@
 - **ID**: DEF-01
 - **Severity**: Medium (Responsive layout violation)
 - **Status**: Resolved
-- **Evidence**: [docs/evidence/filled-cart-375px.png](evidence/filled-cart-375px.png)
+- **Evidence**: no before-fix screenshot was saved. The measurement above (446.58px against a 375px viewport) is the evidence. [docs/evidence/filled-cart-375px.png](evidence/filled-cart-375px.png) shows the page after the fix.
 - **Detected by**: I found this during an exploratory check of the 375px mobile viewport.
 - **Resolved by**: Wrapped the table in a container, set `min-width: 0` on grid children, and added compact padding. Verified via regression test TC-09 in [tests/checkout.spec.js](../tests/checkout.spec.js).
 

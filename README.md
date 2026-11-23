@@ -112,7 +112,7 @@ I found two real layout defects during development. Full steps and measurements 
 - Expected: the full cart fits within the 375px viewport.
 - Actual: the table expanded to 446.58px, causing horizontal page scrolling.
 - Fix: table responsive wrapper and smaller cell padding. Regression test: TC-09.
-- Evidence: [docs/evidence/filled-cart-375px.png](docs/evidence/filled-cart-375px.png).
+- Evidence: no before-fix screenshot was saved. The measurement above (446.58px against a 375px viewport) is the evidence. [docs/evidence/filled-cart-375px.png](docs/evidence/filled-cart-375px.png) shows the page after the fix.
 
 **DEF-02: cart is cramped on desktop.**
 - Found by: me, looking at the page in Chrome at desktop width.

@@ -187,6 +187,4 @@ The full plan is in [docs/TEST_PLAN.md](docs/TEST_PLAN.md). The risks I ranked h
 - [package.json](package.json): project scripts and devDependencies
 - [.nvmrc](.nvmrc): pinned Node version
 
-## Credits
 
-Built with AI assistance (Antigravity, with the ECC rules by affaan-m). I reviewed it and can explain every part.

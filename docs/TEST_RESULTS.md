@@ -1,4 +1,4 @@
-# Test Results
+# Test results
 
 - **Date**: 2026-11-23
 - **Tester**: Dhanush A
@@ -6,17 +6,17 @@
 
 ---
 
-## 1. Automated Test Execution
+## Automated test execution
 
-### Default Chromium Suite (`npm test`)
+### Default Chromium suite (`npm test`)
 - Command: `npx playwright test --project=chromium`
-- Total Tests: 10
+- Total tests: 10
 - Passed: 10
 - Failed: 0
 - Time: 2.6s
-- Evidence: `docs/evidence/test-run-chromium.txt`
+- Evidence: [docs/evidence/test-run-chromium.txt](evidence/test-run-chromium.txt)
 
-| Test ID | Test Name | Browser | Result | Time |
+| Test ID | Test name | Browser | Result | Time |
 | :--- | :--- | :--- | :--- | :--- |
 | TC-01 | places an order and shows a single confirmation reference | Chromium | PASS | 1.8s |
 | TC-02 | blocks checkout when the name is blank and keeps the cart | Chromium | PASS | 0.8s |
@@ -31,13 +31,13 @@
 
 ---
 
-### Cross-Browser Suite (`npm run test:all-browsers`)
+### Cross-browser suite (`npm run test:all-browsers`)
 - Command: `playwright test --project=chromium --project=firefox --project=webkit`
-- Total Tests: 30 (10 tests x 3 browsers)
+- Total tests: 30 (10 tests x 3 browsers)
 - Passed: 30
 - Failed: 0
 - Time: 17.7s
-- Evidence: `docs/evidence/test-run-all-browsers.txt`
+- Evidence: [docs/evidence/test-run-all-browsers.txt](evidence/test-run-all-browsers.txt)
 
 | Browser | Passed | Failed | Status |
 | :--- | :--- | :--- | :--- |
@@ -47,42 +47,42 @@
 
 ---
 
-### Stability Suite (`npm run test:stability`)
+### Stability suite (`npm run test:stability`)
 - Command: `playwright test --project=chromium --repeat-each=10`
-- Total Test Runs: 100
+- Total test runs: 100
 - Passed: 100
 - Failed: 0
 - Flaky: 0
 - Time: 24.8s
-- Evidence: `docs/evidence/test-run-stability.txt`
+- Evidence: [docs/evidence/test-run-stability.txt](evidence/test-run-stability.txt)
 
 Every test passed on all 10 iterations with zero flakiness.
 
 ---
 
-## 2. Test Sensitivity Checks
+## Breaking the app on purpose
 
 To confirm my tests catch real regressions, I tested intentional mutations on throwaway edits and reverted them:
 
-1. **Price Math Mutation**: Changed notebook price from 24990 to 25000 paise in `app/js/cart.js`.
+1. **Price math mutation**: Changed notebook price from 24990 to 25000 paise in [app/js/cart.js](../app/js/cart.js).
    - Result: TC-03 failed as expected (`Expected: "₹749.70", Received: "₹750.00"`).
    - Reverted via git.
 
-2. **Empty Cart Guard Mutation**: Set `isCartEmpty = false` in `handleCheckout` in `app/js/main.js`.
+2. **Empty cart guard mutation**: Set `isCartEmpty = false` in `handleCheckout` in [app/js/main.js](../app/js/main.js).
    - Result: TC-04 failed as expected (`Error: expect(locator).toBeVisible() failed for empty cart error`).
    - Reverted via git.
 
-3. **Double Submission Guard Mutation**: Commented out the state flag check and allowed duplicate cards in `renderConfirmation`.
+3. **Double submission guard mutation**: Commented out the state flag check and allowed duplicate cards in `renderConfirmation`.
    - Result: TC-05 failed as expected (`Expected: 1, Received: 2`).
    - Reverted via git.
 
 ---
 
-## 3. Scripted Probes
+## Scripted probes
 
 I ran scripted exploratory checks to verify edge behaviors:
 
-| Probe | Condition | Result | What Happened |
+| Probe | Condition | Result | What happened |
 | :--- | :--- | :--- | :--- |
 | 1 | Whitespace-only name (`"     "`) | PASS | Blocked with "Enter your name to place the order.", cart kept |
 | 2 | Enter key form submit | PASS | Order placed, created reference format `ORD-XXXXXXXX` |
@@ -94,15 +94,17 @@ I ran scripted exploratory checks to verify edge behaviors:
 
 ---
 
-## 4. Manual Tests
+## Manual tests
 
-I created two manual test cases in `docs/MANUAL_TESTS.md` that I will run by hand:
+I created two manual test cases in [docs/MANUAL_TESTS.md](MANUAL_TESTS.md) that I will run by hand:
 - MAN-01: Empty cart checkout attempt (Status: NOT RUN).
 - MAN-02: Rapid double-click on Place Order (Status: NOT RUN).
 
 ---
 
-## 5. Defects Found and Resolved
+## Defects found and resolved
+
+Full steps, reproduction details, and evidence links are in [docs/DEFECTS.md](DEFECTS.md):
 
 1. **DEF-01: Horizontal overflow on mobile viewports (375px)**
    - Problem: Unconstrained table columns forced document width past 375px.

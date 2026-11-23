@@ -1,4 +1,4 @@
-# Manual Tests
+# Manual tests
 
 I created two test cases that I will run by hand in the browser. They cover scenarios where manual verification gives me confidence before placing real orders.
 
@@ -20,18 +20,18 @@ I created two test cases that I will run by hand in the browser. They cover scen
 3. Click the Full name field and type `Asha Verma`.
 4. Click Place Order.
 
-### Expected Result
+### Expected result
 - The order does not go through.
 - The error message "Add at least one item to your cart." appears.
 - The typed name `Asha Verma` stays in the name field.
 - The Place Order button stays enabled.
 - No order confirmation is displayed.
 
-### My Execution Record
-- **Actual Result**: 
-- **Evidence File**: 
+### Execution record
+- **Actual result**: <<FILL IN>>
+- **Evidence file**: <<FILL IN>>
 - **Tester**: Dhanush A
-- **Date**: 
+- **Date**: <<FILL IN>>
 
 ---
 
@@ -52,15 +52,15 @@ I created two test cases that I will run by hand in the browser. They cover scen
 3. Click the Full name field and type `Asha Verma`.
 4. Double-click Place Order as quickly as possible.
 
-### Expected Result
+### Expected result
 - Exactly one order confirmation appears.
 - A single reference code in the format `ORD-XXXXXXXX` is generated.
 - The reference stays the same and does not flicker or regenerate.
 - The button text changes to "Order placed" and the button becomes disabled.
 - The cart controls and name field become disabled.
 
-### My Execution Record
-- **Actual Result**: 
-- **Evidence File**: 
+### Execution record
+- **Actual result**: <<FILL IN>>
+- **Evidence file**: <<FILL IN>>
 - **Tester**: Dhanush A
-- **Date**: 
+- **Date**: <<FILL IN>>

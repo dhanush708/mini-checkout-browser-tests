@@ -92,13 +92,22 @@ I ran scripted exploratory checks to verify edge behaviors:
 | 6 | Name containing HTML tags (`<b>Asha</b>`) | PASS | Rendered safely as text via textContent |
 | 7 | Viewport overflow check (320px to 1920px) | PASS | No horizontal scrolling on page or cart area |
 
+The probe script was a throwaway and is not in the repo, so those seven results cannot be re-run.
+
 ---
 
 ## Manual tests
 
-I created two manual test cases in [docs/MANUAL_TESTS.md](MANUAL_TESTS.md) that I will run by hand:
-- MAN-01: Empty cart checkout attempt (Status: NOT RUN).
-- MAN-02: Rapid double-click on Place Order (Status: NOT RUN).
+I ran two manual tests by hand in Chrome on Windows 11 on 23 Nov 2026 on the final build served with `npm start` (I did not record the Chrome version). Full steps and execution records are in [docs/MANUAL_TESTS.md](MANUAL_TESTS.md).
+
+| Test ID | Test name | Browser | Result | Evidence |
+| :--- | :--- | :--- | :--- | :--- |
+| MAN-01 | Empty cart checkout attempt (three steps) | Chrome (Windows 11) | PASS | [docs/evidence/man-01-name-kept.png](evidence/man-01-name-kept.png), [docs/evidence/man-01-empty-cart.png](evidence/man-01-empty-cart.png), [docs/evidence/man-01-add-remove.png](evidence/man-01-add-remove.png) |
+| MAN-02 | Rapid double-click on Place Order (one attempt) | Chrome (Windows 11) | PASS | [docs/evidence/man-02-double-click.png](evidence/man-02-double-click.png) |
+
+Both tests passed and matched expected results. Reference ORD-BMUNQP2T was generated on MAN-02. No defects were found by hand.
+
+Not done: I only tried the double-click once. I did not repeat it five times, try a triple-click, press Enter twice or press Enter and then click, so those variants have no manual result.
 
 ---
 

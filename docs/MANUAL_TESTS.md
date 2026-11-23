@@ -1,6 +1,6 @@
 # Manual tests
 
-I created two test cases that I will run by hand in the browser. They cover scenarios where manual verification gives me confidence before placing real orders.
+I ran these manual test cases by hand in Chrome on Windows 11 on 23 Nov 2026 on the final build served with `npm start`. I did not record the Chrome version.
 
 ---
 
@@ -8,30 +8,35 @@ I created two test cases that I will run by hand in the browser. They cover scen
 
 - **Test ID**: MAN-01
 - **Title**: Place Order with an empty cart
-- **Status**: NOT RUN
+- **Status**: PASS
+- **Tester**: Dhanush A
+- **Browser**: Chrome on Windows 11 (version not recorded)
+- **Date**: 23 Nov 2026
 
 ### Preconditions
 1. Open the application in a clean browser window at `http://localhost:8080/`.
 2. Confirm the cart starts empty with the message "Your cart is empty." and total ₹0.00.
 
 ### Steps
-1. Navigate to `http://localhost:8080/`.
-2. Leave the cart empty without adding any items.
-3. Click the Full name field and type `Asha Verma`.
-4. Click Place Order.
+1. With an empty cart, type "Asha Verma" in the Full name field and click Place Order.
+2. With an empty cart and name left blank, click Place Order.
+3. Add an item to the cart, remove it again so the cart is empty, and click Place Order.
 
 ### Expected result
-- The order does not go through.
-- The error message "Add at least one item to your cart." appears.
-- The typed name `Asha Verma` stays in the name field.
-- The Place Order button stays enabled.
-- No order confirmation is displayed.
+- The order does not go through and no confirmation is displayed.
+- Step 1: "Add at least one item to your cart." appears, typed name stays in the field.
+- Step 2: Both "Add at least one item to your cart." and "Enter your name to place the order." appear, name field outlined in red.
+- Step 3: Both messages appear again, no confirmation.
+- The Place Order button stays enabled throughout.
 
 ### Execution record
-- **Actual result**: <<FILL IN>>
-- **Evidence file**: <<FILL IN>>
-- **Tester**: Dhanush A
-- **Date**: <<FILL IN>>
+- **Step 1**: Typed "Asha Verma", clicked Place Order. The message "Add at least one item to your cart." appeared, no confirmation, the name stayed in the field.
+  - Evidence: [docs/evidence/man-01-name-kept.png](evidence/man-01-name-kept.png)
+- **Step 2**: Left name blank, clicked Place Order. Both messages appeared ("Add at least one item to your cart." and "Enter your name to place the order."), the name field was outlined in red, no confirmation.
+  - Evidence: [docs/evidence/man-01-empty-cart.png](evidence/man-01-empty-cart.png)
+- **Step 3**: Added an item, removed it again, clicked Place Order. Both messages appeared again, no confirmation.
+  - Evidence: [docs/evidence/man-01-add-remove.png](evidence/man-01-add-remove.png)
+- **Actual result**: Pass. All three steps matched expected results. No defects found.
 
 ---
 
@@ -39,7 +44,10 @@ I created two test cases that I will run by hand in the browser. They cover scen
 
 - **Test ID**: MAN-02
 - **Title**: Double-click Place Order to check for duplicate orders
-- **Status**: NOT RUN
+- **Status**: PASS (single attempt)
+- **Tester**: Dhanush A
+- **Browser**: Chrome on Windows 11 (version not recorded)
+- **Date**: 23 Nov 2026
 
 ### Preconditions
 1. Open the application at `http://localhost:8080/`.
@@ -49,18 +57,23 @@ I created two test cases that I will run by hand in the browser. They cover scen
 ### Steps
 1. Navigate to `http://localhost:8080/`.
 2. Click Add to cart on A5 Dotted Notebook.
-3. Click the Full name field and type `Asha Verma`.
-4. Double-click Place Order as quickly as possible.
+3. Click the Full name field and type "Asha Verma".
+4. Try to click Place Order twice as quickly as possible (one attempt).
 
 ### Expected result
 - Exactly one order confirmation appears.
 - A single reference code in the format `ORD-XXXXXXXX` is generated.
-- The reference stays the same and does not flicker or regenerate.
 - The button text changes to "Order placed" and the button becomes disabled.
+- The second click does nothing.
 - The cart controls and name field become disabled.
 
 ### Execution record
-- **Actual result**: <<FILL IN>>
-- **Evidence file**: <<FILL IN>>
-- **Tester**: Dhanush A
-- **Date**: <<FILL IN>>
+- **Attempt 1**: Added an item, typed "Asha Verma" and tried to click Place Order twice. The first click placed the order. The button turned grey and read "Order placed", so the second click did nothing. One confirmation appeared with reference ORD-BMUNQP2T.
+  - Evidence: [docs/evidence/man-02-double-click.png](evidence/man-02-double-click.png)
+- **Actual result**: Pass. Exactly one confirmation and reference generated. No duplicate orders.
+
+### Untested variants (NOT RUN)
+- Repeating the double-click five times: NOT RUN
+- Trying a triple-click: NOT RUN
+- Pressing Enter twice quickly: NOT RUN
+- Pressing Enter and then clicking: NOT RUN

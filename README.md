@@ -7,7 +7,7 @@ A single-page checkout for a made-up stationery shop (North Ledger Stationery) a
 - Tests: 10/10 passing in Chromium (2.6 s), 30/30 across browsers (17.7 s), 100/100 in stability run (24.8 s).
 - Browsers: Chromium, Firefox and WebKit on Windows 11.
 - Defects: 2 found and fixed (DEF-01 mobile overflow, DEF-02 desktop cart layout).
-- Manual tests: 2 planned (empty cart, rapid double-click; pending manual run).
+- Manual tests: 2 run by hand in Chrome (empty cart, double-click), no defects found.
 
 ## Run it
 
@@ -90,16 +90,16 @@ How the tests are written:
 
 ## Manual tests
 
-The brief asks for two manual tests. I planned them for manual execution in Chrome on the final build. Full steps are in [docs/MANUAL_TESTS.md](docs/MANUAL_TESTS.md).
-
-Browser and date: <<FILL IN: Chrome version, date>>
+The brief asks for two manual tests. I ran both tests by hand in Chrome on Windows 11 on 23 Nov 2026 on the final build (served with `npm start`), and I did not record the Chrome version. Full steps are in [docs/MANUAL_TESTS.md](docs/MANUAL_TESTS.md).
 
 | ID | What I did | Expected | What I saw |
 | --- | --- | --- | --- |
-| MAN-01 | Clicked Place Order with an empty cart, with and without a name typed, and again after adding and removing an item | The "Add at least one item to your cart." message, no confirmation, typed name kept | <<FILL IN>> |
-| MAN-02 | Added an item, typed a name, then double-clicked Place Order as fast as possible, 5 times. Also tried Enter twice | One confirmation and one reference every time | <<FILL IN>> |
+| MAN-01 | Ran three steps with an empty cart: typed "Asha Verma" and clicked Place Order; left name blank and clicked Place Order; added an item, removed it, and clicked Place Order | The "Add at least one item to your cart." message (and also "Enter your name to place the order." when the name is blank), no confirmation, typed name kept | Step 1 showed "Add at least one item to your cart.", no confirmation, name stayed in field. Step 2 showed both messages, name field outlined in red, no confirmation. Step 3 showed both messages again, no confirmation. Matches expected result. |
+| MAN-02 | Added an item, typed "Asha Verma", and tried to click Place Order twice (single attempt) | Exactly one confirmation card, a single reference code generated, button changes to "Order placed" and disabled | First click placed the order. The button turned grey and read "Order placed", so the second click did nothing. One confirmation, reference ORD-BMUNQP2T. |
 
-Screenshots: <<FILL IN: docs/evidence/man-01-empty-cart.png and docs/evidence/man-02-double-click.png once taken>>.
+Screenshots: [docs/evidence/man-01-name-kept.png](docs/evidence/man-01-name-kept.png), [docs/evidence/man-01-empty-cart.png](docs/evidence/man-01-empty-cart.png), [docs/evidence/man-01-add-remove.png](docs/evidence/man-01-add-remove.png), and [docs/evidence/man-02-double-click.png](docs/evidence/man-02-double-click.png).
+
+Not done: I only tried the double-click once. I did not repeat it five times, try a triple-click, press Enter twice or press Enter and then click, so those variants have no manual result.
 
 ## Defects
 
@@ -122,7 +122,7 @@ I found two real layout defects during development. Full steps and measurements 
 - Fix: widened container to 1120px max-width, set two-column breakpoint at 900px (allocating over 550px to the cart), and stacked cart rows as cards below 600px with CSS. Regression test: TC-10 checks 1280px and 375px for zero overflow and full Remove button visibility.
 - Evidence: [docs/evidence/def-02-before-1280px.png](docs/evidence/def-02-before-1280px.png) and [docs/evidence/filled-cart-1280px.png](docs/evidence/filled-cart-1280px.png).
 
-I did not find any defects in the two manual cases. <<FILL IN: keep this line only if that is true, otherwise describe what you found as DEF-03>>
+I did not find any defects in the two manual cases.
 
 ## Test plan
 
@@ -157,7 +157,7 @@ The full plan is in [docs/TEST_PLAN.md](docs/TEST_PLAN.md). The risks I ranked h
 - Reloading the browser clears the cart because state is kept in memory.
 - Orders are not sent to any backend database.
 - No dedicated print stylesheet for physical receipts.
-- Exploratory probe scripts were run interactively and are not checked in as npm scripts.
+- The probe script was a throwaway and is not in the repo, so those seven results cannot be re-run.
 
 ## What I did not test
 

@@ -70,15 +70,17 @@ function renderCart() {
     const tr = document.createElement('tr');
 
     const tdName = document.createElement('td');
+    tdName.className = 'col-item';
     tdName.textContent = product.name;
     tr.appendChild(tdName);
 
     const tdPrice = document.createElement('td');
-    tdPrice.className = 'col-money';
+    tdPrice.className = 'col-price col-money';
     tdPrice.textContent = formatPaise(product.pricePaise);
     tr.appendChild(tdPrice);
 
     const tdQty = document.createElement('td');
+    tdQty.className = 'col-qty';
     const qtyWrap = document.createElement('div');
     qtyWrap.className = 'quantity-controls';
 
@@ -139,12 +141,13 @@ function renderCart() {
     tr.appendChild(tdQty);
 
     const tdTotal = document.createElement('td');
-    tdTotal.className = 'col-money';
+    tdTotal.className = 'col-total col-money';
     tdTotal.setAttribute('data-testid', product.testId);
     tdTotal.textContent = formatPaise(lineTotal);
     tr.appendChild(tdTotal);
 
     const tdAction = document.createElement('td');
+    tdAction.className = 'col-action';
     const rmBtn = document.createElement('button');
     rmBtn.type = 'button';
     rmBtn.className = 'btn-secondary';
@@ -254,7 +257,7 @@ function renderConfirmation(ref, customerName, totalPaise) {
   card.appendChild(title);
 
   const intro = document.createElement('p');
-  intro.textContent = 'Thank you for your order. We have prepared your receipt:';
+  intro.textContent = 'Your order has been placed.';
   card.appendChild(intro);
 
   const list = document.createElement('ul');
@@ -278,7 +281,7 @@ function renderConfirmation(ref, customerName, totalPaise) {
   list.appendChild(liName);
 
   const liTotal = document.createElement('li');
-  liTotal.textContent = 'Total paid: ';
+  liTotal.textContent = 'Total: ';
   const totalSpan = document.createElement('span');
   totalSpan.id = 'confirmation-total';
   totalSpan.textContent = formatPaise(totalPaise);

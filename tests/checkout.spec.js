@@ -24,7 +24,7 @@ test.describe('Checkout Flow', () => {
         await expect(checkout.getLineTotal('line-total-notebook')).toHaveText('₹249.90');
         await expect(checkout.orderTotal).toHaveText('₹249.90');
 
-        await checkout.fillName('Dhanush Anbu');
+        await checkout.fillName('Asha Verma');
       });
 
       await test.step('Submit order and assert single confirmation', async () => {
@@ -40,7 +40,7 @@ test.describe('Checkout Flow', () => {
 
         // Confirmation contains total and customer name
         await expect(checkout.confirmation).toContainText('₹249.90');
-        await expect(checkout.confirmation).toContainText('Dhanush Anbu');
+        await expect(checkout.confirmation).toContainText('Asha Verma');
       });
 
       await test.step('Verify post-order locking', async () => {
@@ -111,13 +111,13 @@ test.describe('Checkout Flow', () => {
   test.describe('Additional risk checks', () => {
     test('blocks checkout on empty cart with exact message and preserves typed name', async () => {
       await test.step('Type name without adding items', async () => {
-        await checkout.fillName('Dhanush Anbu');
+        await checkout.fillName('Asha Verma');
       });
 
       await test.step('Attempt order placement', async () => {
         await checkout.placeOrder();
         await expect(checkout.emptyCartError).toBeVisible();
-        await expect(checkout.nameInput).toHaveValue('Dhanush Anbu');
+        await expect(checkout.nameInput).toHaveValue('Asha Verma');
         await expect(checkout.confirmation).toHaveCount(0);
         await expect(checkout.placeOrderButton).toBeEnabled();
       });
@@ -126,7 +126,7 @@ test.describe('Checkout Flow', () => {
     test('double-click on Place Order gives exactly one confirmation and reference stays the same', async () => {
       await test.step('Prepare order', async () => {
         await checkout.addProduct('A5 Dotted Notebook');
-        await checkout.fillName('Dhanush Anbu');
+        await checkout.fillName('Asha Verma');
       });
 
       await test.step('Rapid double-click on submit button', async () => {
@@ -144,7 +144,7 @@ test.describe('Checkout Flow', () => {
     test('two clicks in the same tick still give one confirmation', async () => {
       await test.step('Prepare order', async () => {
         await checkout.addProduct('Brass Fountain Pen');
-        await checkout.fillName('Dhanush Anbu');
+        await checkout.fillName('Asha Verma');
       });
 
       await test.step('Trigger two simultaneous clicks via page evaluate', async () => {
@@ -216,6 +216,44 @@ test.describe('Checkout Flow', () => {
         });
         expect(isOverflowing).toBe(false);
       });
+    });
+
+    test('ensures cart has no horizontal overflow and Remove button is fully visible at 1280px and 375px (regression DEF-02)', async ({ page }) => {
+      const viewports = [
+        { width: 1280, height: 800 },
+        { width: 375, height: 812 }
+      ];
+
+      for (const vp of viewports) {
+        await test.step(`Verify layout at ${vp.width}px viewport`, async () => {
+          await page.setViewportSize(vp);
+          await checkout.goto();
+          await checkout.addProduct('A5 Dotted Notebook');
+          await checkout.addProduct('Brass Fountain Pen');
+
+          const layoutMetrics = await page.evaluate(() => {
+            const wrapper = document.querySelector('.table-responsive');
+            const removeButtons = Array.from(document.querySelectorAll('button[aria-label="Remove"]'));
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const winWidth = window.innerWidth;
+
+            const allRemoveButtonsVisible = removeButtons.every(btn => {
+              const rect = btn.getBoundingClientRect();
+              return rect.right <= winWidth && rect.left >= 0 && rect.right <= wrapperRect.right + 2;
+            });
+
+            return {
+              hasWrapperOverflow: wrapper.scrollWidth > wrapper.clientWidth,
+              hasDocumentOverflow: document.documentElement.scrollWidth > winWidth,
+              allRemoveButtonsVisible
+            };
+          });
+
+          expect(layoutMetrics.hasWrapperOverflow).toBe(false);
+          expect(layoutMetrics.hasDocumentOverflow).toBe(false);
+          expect(layoutMetrics.allRemoveButtonsVisible).toBe(true);
+        });
+      }
     });
   });
 });

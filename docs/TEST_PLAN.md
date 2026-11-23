@@ -1,53 +1,65 @@
 # Test Plan: Mini Checkout
 
+I wrote this test plan to verify the single-page checkout flow for North Ledger Stationery. My primary focus is to make sure checkout works correctly, calculation errors never reach customers, and common customer mistakes are handled cleanly.
+
+---
+
 ## 1. Scope
-The test scope covers client-side checkout behavior for North Ledger Stationery:
-- Adding and removing synthetic catalog items.
-- Line quantity adjustments (1 to 20) and immediate line/order total recalculation.
-- Money formatting with exact integer paise arithmetic.
-- Field validation (blank and whitespace name checks, empty cart checks, focus management).
-- Single order confirmation generation with unique reference.
-- Double-submission prevention and state locking post-order.
-- Accessibility standards and responsive layout at 375px and 1280px.
+
+What I am testing:
+- Adding and removing catalog products.
+- Line quantity adjustments (1 to 20) with immediate subtotal and order total recalculation.
+- Money calculations using integer paise arithmetic without floating point rounding errors.
+- Form validation (blank name, whitespace-only name, empty cart, focus placement).
+- Order confirmation with a single reference ID.
+- Prevention of duplicate order submissions.
+- Locking of the form and cart controls once an order is placed.
+- Responsive layout across mobile and desktop widths (320px to 1920px).
 
 ## 2. Out of Scope
-- Backend APIs, databases, authentication, user accounts, and session persistence.
-- Payment gateway processing, shipping calculations, tax rates, and discount codes.
-- LocalStorage caching, service workers, and offline sync.
 
-## 3. Risk Assessment Matrix (Ranked by Likelihood x Impact)
+What I am not testing:
+- Backend servers, databases, or API integrations.
+- Payment gateway processing, shipping rates, taxes, or coupon codes.
+- Local storage or session persistence across browser reloads.
 
-| Rank | Risk Description | Likelihood | Impact | Mitigation Strategy |
+## 3. Risks and Priority
+
+I ranked these risks by how likely they are to happen and their impact on customer trust:
+
+| Rank | Risk | Likelihood | Impact | How I Mitigate It |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Wrong total from floating point math | High | High | Integer paise arithmetic, strict string formatting |
-| 2 | Duplicate order from rapid double-click | High | High | Synchronous state guard plus button disable |
-| 3 | Empty cart accepted for checkout | Med | High | Pre-submit cart length validation |
-| 4 | Blank or whitespace name accepted | Med | Med | Name trim validation before checkout |
-| 5 | Customer input wiped on validation failure | Med | Med | Preserve input field value on validation error |
-| 6 | Invalid quantity inputs (0, negative, >20, text) | Med | Med | Pure clampQuantity function with revert |
-| 7 | Cart modifications permitted after order placed | Med | Med | Disable all inputs and action buttons on success |
-| 8 | Missing or malformed reference ID | Low | High | Cryptographic random generation against format regex |
-| 9 | Unsafe name reflection (XSS) | Low | High | Use textContent exclusively for user name rendering |
-| 10 | Keyboard-only submission blocked | Med | Med | Listen to form submit event triggered by Enter key |
-| 11 | Viewport overflow on mobile devices | Med | Low | CSS grid layout, responsive table wrapper, min-width: 0 |
+| 1 | Wrong total due to floating point math | High | High | I store all prices in integer paise and format at render |
+| 2 | Duplicate order on fast double-click | High | High | Synchronous state flag in submit handler plus button disable |
+| 3 | Order placed with an empty cart | Med | High | Pre-submit check blocks empty carts and shows error |
+| 4 | Order placed with blank or spaces name | Med | Med | Name trimmed before validation check |
+| 5 | Typed name lost on validation failure | Med | Med | I keep the typed value intact without clearing |
+| 6 | Invalid typed quantity (0, text, >20) | Med | Med | Pure clamp function reverts to last valid quantity |
+| 7 | Cart edited after placing order | Med | Med | All buttons and inputs disabled on success |
+| 8 | Duplicate or missing reference code | Low | High | Crypto random values over safe 32-character alphabet |
+| 9 | Script injection via customer name | Low | High | Name rendered strictly via textContent |
+| 10 | Enter key does not submit | Med | Med | Form submit listener catches Enter key |
+| 11 | Cart table horizontal overflow | Med | Med | CSS-only card stacking below 600px, wide panel above 900px |
 
-## 4. Test Cases and Automation Mapping
+## 4. Test Cases
 
-| Test ID | Title | Method | Automated Spec / Target |
+| ID | Title | Type | Target |
 | :--- | :--- | :--- | :--- |
-| TC-01 | Order placement and confirmation reference | Automated | `tests/checkout.spec.js` (Required Check 1) |
-| TC-02 | Blank name validation with cart preservation | Automated | `tests/checkout.spec.js` (Required Check 2) |
-| TC-03 | Live total updates on quantity changes | Automated | `tests/checkout.spec.js` (Required Check 3) |
-| TC-04 | Empty cart checkout blocked with typed name preserved | Automated | `tests/checkout.spec.js` (Risk Check 4) |
-| TC-05 | Double-click idempotency check | Automated | `tests/checkout.spec.js` (Risk Check 5) |
-| TC-06 | Same-tick double click programmatic invocation | Automated | `tests/checkout.spec.js` (Risk Check 6) |
-| TC-07 | Quantity clamp and revert on invalid inputs | Automated | `tests/checkout.spec.js` (Risk Check 7) |
-| TC-08 | Enter-key form submission with blank name | Automated | `tests/checkout.spec.js` (Risk Check 8) |
-| TC-09 | Mobile viewport horizontal overflow prevention | Automated | `tests/checkout.spec.js` (Regression DEF-01) |
-| MAN-01 | Manual verification of empty cart submission | Manual | `docs/MANUAL_TESTS.md` (Designated for Dhanush) |
-| MAN-02 | Manual verification of rapid button double-click | Manual | `docs/MANUAL_TESTS.md` (Designated for Dhanush) |
+| TC-01 | Places an order and shows single confirmation reference | Automated | `tests/checkout.spec.js` |
+| TC-02 | Blocks checkout when name is blank and keeps cart | Automated | `tests/checkout.spec.js` |
+| TC-03 | Updates line and order totals exactly when quantity changes | Automated | `tests/checkout.spec.js` |
+| TC-04 | Blocks checkout on empty cart and preserves typed name | Automated | `tests/checkout.spec.js` |
+| TC-05 | Double-click on Place Order gives one confirmation | Automated | `tests/checkout.spec.js` |
+| TC-06 | Two clicks in same tick still give one confirmation | Automated | `tests/checkout.spec.js` |
+| TC-07 | Reverts invalid quantity inputs (0, abc, 21) to last valid value | Automated | `tests/checkout.spec.js` |
+| TC-08 | Blocks Enter-key submission when name is blank | Automated | `tests/checkout.spec.js` |
+| TC-09 | Prevents horizontal viewport overflow at 375px (DEF-01) | Automated | `tests/checkout.spec.js` |
+| TC-10 | Ensures no cart overflow and Remove fully visible at 1280px and 375px (DEF-02) | Automated | `tests/checkout.spec.js` |
+| MAN-01 | Empty cart checkout attempt | Manual | `docs/MANUAL_TESTS.md` |
+| MAN-02 | Rapid double-click on Place Order | Manual | `docs/MANUAL_TESTS.md` |
 
-## 5. Test Environments
-- Operating System: Windows 11 (tested locally), cross-compatible with macOS and Linux.
-- Runtimes: Node.js v26.13.0, npm 11.20.0, Git 2.56.0.
-- Browsers: Chromium 159.0.8154.6, Firefox 159.0, WebKit 27.2 (via Playwright 1.65.1).
+## 5. Test Environment
+
+- Operating System: Windows 11 (PowerShell)
+- Runtimes: Node.js v26.13.0, npm 11.20.0, Git 2.56.0
+- Browsers tested: Chromium, Firefox, WebKit (via Playwright)

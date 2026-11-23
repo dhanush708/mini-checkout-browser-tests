@@ -1,67 +1,66 @@
-# Manual Test Plan & Execution Records
+# Manual Tests
 
-This document defines manual test procedures reserved for human execution. Per instructions, these cases are designated for the candidate (Dhanush) to execute and record during exploratory validation.
+I created two test cases that I will run by hand in the browser. They cover scenarios where manual verification gives me confidence before placing real orders.
 
 ---
 
-## Test Case MAN-01: Empty cart checkout attempt
+## MAN-01: Empty cart checkout attempt
 
 - **Test ID**: MAN-01
-- **Title**: Attempt order placement with an empty cart
+- **Title**: Place Order with an empty cart
 - **Status**: NOT RUN
 
 ### Preconditions
-1. Clean browser session opened at `http://localhost:8080/`.
-2. Initial pristine state verified: "Your cart is empty." is visible and total is ₹0.00.
+1. Open the application in a clean browser window at `http://localhost:8080/`.
+2. Confirm the cart starts empty with the message "Your cart is empty." and total ₹0.00.
 
-### Execution Steps
+### Steps
 1. Navigate to `http://localhost:8080/`.
-2. Do not add any products to the cart.
-3. Click inside the "Full name" field and enter `Dhanush Anbu`.
-4. Click the "Place Order" button once.
+2. Leave the cart empty without adding any items.
+3. Click the Full name field and type `Asha Verma`.
+4. Click Place Order.
 
 ### Expected Result
-- Order is blocked.
-- Validation message displays: `Add at least one item to your cart.`.
-- Focus moves to the product catalog to guide item selection.
-- The typed name `Dhanush Anbu` is preserved in the input without truncation or trimming.
-- No confirmation card is rendered.
-- "Place Order" button remains enabled.
+- The order does not go through.
+- The error message "Add at least one item to your cart." appears.
+- The typed name `Asha Verma` stays in the name field.
+- The Place Order button stays enabled.
+- No order confirmation is displayed.
 
-### Observation & Execution Record
-- **Actual Result**: [NOT RUN - To be recorded by Dhanush]
-- **Evidence File**: [NOT RUN - Attach screenshot or video timestamp]
-- **Tester**: [Dhanush]
-- **Date**: [NOT RUN]
+### My Execution Record
+- **Actual Result**: 
+- **Evidence File**: 
+- **Tester**: Dhanush A
+- **Date**: 
 
 ---
 
-## Test Case MAN-02: Rapid double-click on Place Order button
+## MAN-02: Rapid double-click on Place Order
 
 - **Test ID**: MAN-02
-- **Title**: Rapid double-click submission to verify idempotency
+- **Title**: Double-click Place Order to check for duplicate orders
 - **Status**: NOT RUN
 
 ### Preconditions
-1. Clean browser session opened at `http://localhost:8080/`.
-2. At least one item added to the cart.
-3. Valid name entered in the "Full name" field.
+1. Open the application at `http://localhost:8080/`.
+2. Add at least one item to the cart.
+3. Enter a valid customer name.
 
-### Execution Steps
+### Steps
 1. Navigate to `http://localhost:8080/`.
-2. Click "Add to cart" on "A5 Dotted Notebook" (Total shows ₹249.90).
-3. Click inside the "Full name" field and enter `Dhanush Anbu`.
-4. Rapidly double-click the primary "Place Order" button with the mouse.
+2. Click Add to cart on A5 Dotted Notebook.
+3. Click the Full name field and type `Asha Verma`.
+4. Double-click Place Order as quickly as possible.
 
 ### Expected Result
-- Exactly one order confirmation card is created in the DOM.
-- A single reference matching format `ORD-[A-HJ-NP-Z2-9]{8}` is displayed.
-- The reference remains static (no secondary reference is generated).
-- "Place Order" button transitions to "Order placed" and becomes disabled.
-- Cart controls and name input become disabled.
+- Exactly one order confirmation appears.
+- A single reference code in the format `ORD-XXXXXXXX` is generated.
+- The reference stays the same and does not flicker or regenerate.
+- The button text changes to "Order placed" and the button becomes disabled.
+- The cart controls and name field become disabled.
 
-### Observation & Execution Record
-- **Actual Result**: [NOT RUN - To be recorded by Dhanush]
-- **Evidence File**: [NOT RUN - Attach screenshot or video timestamp]
-- **Tester**: [Dhanush]
-- **Date**: [NOT RUN]
+### My Execution Record
+- **Actual Result**: 
+- **Evidence File**: 
+- **Tester**: Dhanush A
+- **Date**: 

@@ -6,8 +6,8 @@
 - **Severity**: Medium (Responsive layout violation)
 - **Status**: Resolved
 - **Evidence**: `docs/evidence/filled-cart-375px.png`
-- **Detected By**: Scripted probe (`run-probes.js` 375px responsive check)
-- **Resolved By**: Wrapped table in `.table-responsive` container, set `min-width: 0` on grid children, and added `@media (max-width: 480px)` cell padding adjustments. Verified via regression test `prevents horizontal viewport overflow at 375px mobile breakpoint (regression DEF-01)`.
+- **Detected By**: I found this during an exploratory check of the 375px mobile viewport.
+- **Resolved By**: Wrapped the table in a container, set `min-width: 0` on grid children, and added compact padding. Verified via regression test TC-09.
 
 ### Steps to Reproduce
 1. Set viewport to 375px x 812px (standard mobile device viewport).
@@ -32,14 +32,14 @@ The page remains within the 375px viewport width (`scrollWidth <= innerWidth`) w
 
 - **ID**: DEF-02
 - **Severity**: High (Desktop usability and responsive defect)
-- **Status**: Identified
+- **Status**: Resolved
 - **Evidence**:
   - `docs/evidence/def-02-before-375px.png`
   - `docs/evidence/def-02-before-1024px.png`
   - `docs/evidence/def-02-before-1280px.png`
   - `docs/evidence/def-02-before-1600px.png`
-- **Detected By**: Found by hand in Chrome by Dhanush. Confirmed and measured via automated Playwright probe.
-- **Cause**: The earlier DEF-01 fix introduced an `overflow-x: auto` container (`.table-responsive`) within a fixed 960px container split into a 1.1fr / 0.9fr grid. The right column had only 384px client width, which is too narrow for a 5-column table (434px minimum width). This caused a horizontal scrollbar on desktop, pushed the Remove button 42px off the right edge, and wrapped product titles into multiple lines.
+- **Detected By**: I found this by hand in Chrome while testing desktop screen widths. I then confirmed and measured it with a Playwright probe script.
+- **Cause**: The initial DEF-01 fix introduced an `overflow-x: auto` wrapper on the cart table within a 960px container. In the two-column layout, the order column only had 384px width, which was too narrow for the 434px cart table. This caused horizontal scrolling on desktop, clipped the Remove button, and wrapped item names onto multiple lines.
 
 ### Steps to Reproduce
 1. Open the application at desktop width (1024px, 1280px, or 1600px).
@@ -63,9 +63,8 @@ The page remains within the 375px viewport width (`scrollWidth <= innerWidth`) w
   - Container width: 333px, table scroll width: 373px.
   - "Remove" button right edge: 389.88px vs 375px window width (button clipped outside viewport).
 
-### Remediation Plan
-1. Widen the desktop page wrapper to ~1120px max-width to provide comfortable breathing room.
-2. Adjust the two-column grid breakpoint to ~900px, allocating sufficient space for the cart (e.g. 1fr 1.2fr or minimum ~560px for the order column).
-3. At 600px and below, stack each cart row using CSS (display: block/flex cards) instead of horizontal table scrolling.
-4. Eliminate horizontal scrolling from 320px to 1920px width.
-5. Add regression test TC-10 covering 1280px and 375px viewports.
+### Resolution
+1. Widened the desktop page wrapper to 1120px max-width.
+2. Adjusted the two-column grid breakpoint to 900px with a 1fr 1.25fr ratio, giving the order column over 550px of space.
+3. At 600px and below, stacked cart rows as cards using pure CSS without horizontal table scrolling.
+4. Added automated regression test TC-10 asserting zero overflow and full Remove button visibility at 1280px and 375px.

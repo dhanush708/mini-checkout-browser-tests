@@ -1,0 +1,20 @@
+{
+  "name": "mini-checkout",
+  "version": "1.0.0",
+  "description": "Mini checkout and browser test suite",
+  "type": "module",
+  "engines": {
+    "node": ">=26.0.0"
+  },
+  "scripts": {
+    "start": "http-server app -p 8080 -c-1",
+    "test": "playwright test --project=chromium",
+    "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:stability": "playwright test --project=chromium --repeat-each=10",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "http-server": "14.1.1"
+  }
+}

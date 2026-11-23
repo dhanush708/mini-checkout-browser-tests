@@ -11,6 +11,7 @@
     "test": "playwright test --project=chromium",
     "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
     "test:stability": "playwright test --project=chromium --repeat-each=10",
+    "screenshots": "node scripts/capture-screenshots.js",
     "report": "playwright show-report"
   },
   "devDependencies": {

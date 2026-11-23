@@ -45,13 +45,17 @@ export class CheckoutPage {
     return this.page.getByRole('row').filter({ hasText: productName });
   }
 
+  getQuantityInput(productName) {
+    const row = this.getCartRow(productName);
+    return row.getByRole('spinbutton', { name: 'Quantity' });
+  }
+
   getLineTotal(testId) {
     return this.page.getByTestId(testId);
   }
 
   async setQuantity(productName, quantity) {
-    const row = this.getCartRow(productName);
-    const input = row.getByLabel('Quantity');
+    const input = this.getQuantityInput(productName);
     await input.fill(String(quantity));
   }
 

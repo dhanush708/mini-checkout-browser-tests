@@ -53,7 +53,7 @@ test.describe('Checkout Flow', () => {
         await expect(row.getByRole('button', { name: 'Increase quantity' })).toBeDisabled();
         await expect(row.getByRole('button', { name: 'Decrease quantity' })).toBeDisabled();
         await expect(row.getByRole('button', { name: 'Remove' })).toBeDisabled();
-        await expect(row.getByLabel('Quantity')).toBeDisabled();
+        await expect(checkout.getQuantityInput('A5 Dotted Notebook')).toBeDisabled();
       });
 
       await test.step('Reset via start a new order', async () => {
@@ -80,8 +80,7 @@ test.describe('Checkout Flow', () => {
       });
 
       await test.step('Verify cart is untouched and button remains enabled', async () => {
-        const row = checkout.getCartRow('Brass Fountain Pen');
-        await expect(row.getByLabel('Quantity')).toHaveValue('1');
+        await expect(checkout.getQuantityInput('Brass Fountain Pen')).toHaveValue('1');
         await expect(checkout.orderTotal).toHaveText('₹1,199.95');
         await expect(checkout.placeOrderButton).toBeEnabled();
       });
@@ -163,27 +162,32 @@ test.describe('Checkout Flow', () => {
     test('reverts invalid quantity inputs (0, abc, 21) to last valid value', async () => {
       await test.step('Add product with valid initial quantity 1', async () => {
         await checkout.addProduct('A5 Dotted Notebook');
-        const input = checkout.getCartRow('A5 Dotted Notebook').getByLabel('Quantity');
+        const input = checkout.getQuantityInput('A5 Dotted Notebook');
         await expect(input).toHaveValue('1');
 
         // Input 0 reverts to 1
         await input.fill('0');
+        await input.blur();
         await expect(input).toHaveValue('1');
 
         // Input text reverts to 1
         await input.fill('abc');
+        await input.blur();
         await expect(input).toHaveValue('1');
 
         // Input above max 20 reverts to 1
         await input.fill('21');
+        await input.blur();
         await expect(input).toHaveValue('1');
 
         // Valid change to 5
         await input.fill('5');
+        await input.blur();
         await expect(input).toHaveValue('5');
 
         // Input 0 now reverts to 5
         await input.fill('0');
+        await input.blur();
         await expect(input).toHaveValue('5');
       });
     });

@@ -56,6 +56,10 @@ h1 {
   gap: 32px;
 }
 
+.layout-grid > * {
+  min-width: 0;
+}
+
 @media (min-width: 760px) {
   .layout-grid {
     grid-template-columns: 1.1fr 0.9fr;
@@ -121,12 +125,20 @@ h2 {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 16px;
+  overflow: hidden;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cart-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
+  min-width: 300px;
 }
 
 .cart-table th,
@@ -342,6 +354,29 @@ button:focus-visible,
 input:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px;
+  }
+  .cart-section {
+    padding: 12px 8px;
+  }
+  .cart-table th,
+  .cart-table td {
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+  .qty-input {
+    width: 36px;
+    height: 28px;
+    font-size: 13px;
+  }
+  .btn-qty {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

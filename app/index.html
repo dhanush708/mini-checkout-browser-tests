@@ -26,21 +26,23 @@
         
         <div id="cart-container">
           <p id="empty-cart-message" class="empty-cart-message">Your cart is empty.</p>
-          <table id="cart-table" class="cart-table" hidden>
-            <caption class="visually-hidden" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Items currently in your shopping cart</caption>
-            <thead>
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col" class="col-money">Price</th>
-                <th scope="col">Qty</th>
-                <th scope="col" class="col-money">Total</th>
-                <th scope="col"><span class="visually-hidden" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Actions</span></th>
-              </tr>
-            </thead>
-            <tbody id="cart-items-body">
-              <!-- Rendered rows -->
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table id="cart-table" class="cart-table" hidden>
+              <caption class="visually-hidden" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Items currently in your shopping cart</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col" class="col-money">Price</th>
+                  <th scope="col">Qty</th>
+                  <th scope="col" class="col-money">Total</th>
+                  <th scope="col"><span class="visually-hidden" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="cart-items-body">
+                <!-- Rendered rows -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div class="order-total-bar">

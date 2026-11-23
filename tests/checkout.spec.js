@@ -202,5 +202,20 @@ test.describe('Checkout Flow', () => {
         await expect(checkout.confirmation).toHaveCount(0);
       });
     });
+
+    test('prevents horizontal viewport overflow at 375px mobile breakpoint (regression DEF-01)', async ({ page }) => {
+      await test.step('Set mobile viewport and populate cart', async () => {
+        await page.setViewportSize({ width: 375, height: 812 });
+        await checkout.addProduct('A5 Dotted Notebook');
+        await checkout.addProduct('Brass Fountain Pen');
+      });
+
+      await test.step('Assert document does not overflow viewport width', async () => {
+        const isOverflowing = await page.evaluate(() => {
+          return document.documentElement.scrollWidth > window.innerWidth;
+        });
+        expect(isOverflowing).toBe(false);
+      });
+    });
   });
 });

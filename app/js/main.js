@@ -263,6 +263,7 @@ function renderConfirmation(ref, customerName, totalPaise) {
   const liRef = document.createElement('li');
   liRef.textContent = 'Reference: ';
   const refSpan = document.createElement('span');
+  refSpan.id = 'confirmation-ref';
   refSpan.setAttribute('data-testid', 'reference');
   refSpan.textContent = ref;
   liRef.appendChild(refSpan);
@@ -271,6 +272,7 @@ function renderConfirmation(ref, customerName, totalPaise) {
   const liName = document.createElement('li');
   liName.textContent = 'Customer: ';
   const nameSpan = document.createElement('span');
+  nameSpan.id = 'confirmation-name';
   nameSpan.textContent = customerName;
   liName.appendChild(nameSpan);
   list.appendChild(liName);
@@ -278,6 +280,7 @@ function renderConfirmation(ref, customerName, totalPaise) {
   const liTotal = document.createElement('li');
   liTotal.textContent = 'Total paid: ';
   const totalSpan = document.createElement('span');
+  totalSpan.id = 'confirmation-total';
   totalSpan.textContent = formatPaise(totalPaise);
   liTotal.appendChild(totalSpan);
   list.appendChild(liTotal);
